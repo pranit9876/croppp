@@ -1,0 +1,912 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>CROP PRICE PREDICTION</title>
+  <!-- Compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"> -->
+  <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
+    :root {
+      --primary-color-hue: 252;
+      --dark-color-lightness: 95%;
+      --light-color-lightness: 20%;
+      --white-color-lightness: 15%;
+
+
+      --color-white: hsl(252, 30%, var(--white-color-lightness));
+      --color-light: hsl(252, 30%, var(--light-color-lightness));
+      --color-gray: hsl(var(--primary-color-hue), 15%, 65%);
+      --color-primary: hsl(var(--primary-color-hue), 80%, 60%);
+      --color-secondary: hsl(252, 100%, 90%);
+      --color-sucess: hsl(120, 95%, 65%);
+      --color-danger: hsl(0, 95%, 65%);
+      --color-dark: hsl(252, 30%, var(--dark-color-lightness));
+      --color-black: hsl(252, 30%, 10%);
+
+      --border-radius: 2rem;
+      --car-border-radius: 1rem;
+      --btn-padding: 0.6rem 2rem;
+      --search-padding: 0.6rem 2rem;
+      --card-padding: 1rem;
+
+      --sticky-top-left: 5.4rem;
+      --sticky-top-right: -18rem;
+    }
+
+    *,
+    *::before,
+    *::after {
+      margin: 0;
+      padding: 0;
+      outline: 0;
+      box-sizing: border-box;
+      text-decoration: none;
+      list-style: none;
+      border: none;
+    }
+
+    body {
+      font-family: "Poppins", sans-serif;
+      color: var(--color-dark);
+      background: var(--color-light);
+      overflow-x: hidden;
+    }
+
+    .container {
+      width: 80%;
+      margin: 0 auto;
+    }
+
+    .profile-photo {
+      width: 3.5rem;
+      aspect-ratio: 1/1;
+      border-radius: 50%;
+      overflow: hidden;
+    }
+
+    img {
+      display: block;
+      width: 100%;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: var(--btn-padding);
+      font-weight: 500;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: all 300ms ease;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      opacity: 0.8;
+    }
+
+    .btn-primary {
+      background: var(--color-primary);
+      color: white;
+    }
+
+    .text-bold {
+      font-weight: 500;
+    }
+
+    .text-muted {
+      color: var(--color-gray);
+    }
+
+    /* ----------------------------------Navbar---------------------- */
+    nav {
+      width: 100%;
+      background: var(--color-white);
+      padding: 0.7rem 0;
+      position: fixed;
+      top: 0;
+      z-index: 10;
+    }
+
+    nav .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    nav .create {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+    }
+
+    /* =====================================  Main  =============================== */
+    main {
+      position: relative;
+      top: 5.4rem;
+    }
+
+    main .container {
+      display: grid;
+      grid-template-columns: 18vw auto;
+      column-gap: 2rem;
+      position: relative;
+    }
+
+    /* ============================== LEFT  ============================================= */
+    main .container .left {
+      height: max-content;
+      position: sticky;
+      top: var(--sticky-top-left);
+    }
+
+    main .container .left .profile {
+      padding: var(--card-padding);
+      background: var(--color-white);
+      border-radius: var(--car-border-radius);
+      margin-top: 1rem;
+      display: flex;
+      align-items: center;
+      column-gap: 1rem;
+      width: 100%;
+    }
+
+    /* ------------------- Sidebar ------------------------ */
+    .left .sidebar {
+      margin-top: 2rem;
+      background: var(--color-white);
+      border-radius: var(--car-border-radius);
+    }
+
+    .left .sidebar .menu-item {
+      display: flex;
+      align-items: center;
+      height: 4rem;
+      cursor: pointer;
+      transition: all 300ms ease;
+      position: relative;
+    }
+
+    .left .sidebar .menu-item:hover {
+      background: var(--color-light);
+    }
+
+    .left .sidebar i {
+      font-size: 1.4rem;
+      color: var(--color-gray);
+      margin-left: 2rem;
+      position: relative;
+    }
+
+    .left .sidebar h3 {
+      margin-left: 1.5rem;
+      font-size: 1rem;
+    }
+
+    .left .sidebar .active {
+      background: var(--color-light);
+    }
+
+    .left .sidebar .active i,
+    .left .sidebar .active h3 {
+      color: var(--color-primary);
+    }
+
+    .left .sidebar .active::before {
+      content: "";
+      display: block;
+      width: 0.5rem;
+      height: 100%;
+      position: absoluted;
+      background: var(--color-primary);
+    }
+
+    .left .sidebar .menu-item:first-child.active {
+      border-top-left-radius: var(--car-border-radius);
+      overflow: hidden;
+    }
+
+    .left .sidebar .menu-item:last-child.active {
+      border-bottom-left-radius: var(--car-border-radius);
+      overflow: hidden;
+    }
+
+    .left .btn {
+      margin-top: 1rem;
+      width: 100%;
+      text-align: center;
+      padding: 1rem 0;
+    }
+
+    /* --------------------Notification Popup------------------- */
+    .left .notifications-popup {
+      position: absolute;
+      top: 0;
+      left: 110%;
+      width: 30rem;
+      background: var(--color-white);
+      border-radius: var(--car-border-radius);
+      padding: var(--card-padding);
+      box-shadow: 0 0 2rem hsl(var(--color-primary), 75%, 60%, 25%);
+      z-index: 8;
+      display: none;
+      box-shadow: 0 0 1rem var(--color-primary);
+    }
+
+    .left .notifications-popup::before {
+      content: "";
+      width: 1.2rem;
+      background: var(--color-white);
+      height: 1.2rem;
+      position: absolute;
+      display: block;
+      left: -0.6rem;
+      transform: rotate(45deg);
+    }
+
+    .left .notifications-popup>div {
+      display: flex;
+      align-items: start;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+
+    .left .notifications-popup small {
+      display: block;
+    }
+
+    /* ============================MIDDLE=============================== */
+
+    /* ============================CARDS=============================== */
+
+    .cards {
+      display: grid;
+      grid-template-rows: 250px 140px;
+      grid-gap: 40px;
+      padding: 20px;
+      background-color: var(--color-light);
+    }
+
+    .contaner {
+      margin-top: 100px;
+      display: flex;
+      flex-direction: row;
+      gap: 20px;
+      padding: var(--border-radius);
+      background-color: coral;
+      border-radius: var(--card-padding);
+      height: fit-content;
+      /* width: 50rem; */
+    }
+
+    .gapp {
+      grid-gap: 40px;
+      /* padding: 50px; */
+    }
+
+    /* ============================  ROW 1 =============================== */
+
+    .cards .row-1 {
+      display: grid;
+      grid-template-columns: 50% 50%;
+      grid-gap: 20px;
+      /* padding-top: 20%; */
+    }
+
+    .cards .row-2 {
+      display: grid;
+      grid-template-columns: auto;
+      grid-gap: 20px;
+      padding-top: 1380px;
+      /* padding-top: 20%; */
+    }
+
+    .cards .row-3 {
+      display: grid;
+      grid-template-columns: 1fr;
+      grid-gap: 20px;
+      padding-top: 50px;
+      /* padding-top: 20%; */
+    }
+
+    .cards .row .col {
+      background: var(--color-white);
+      border-radius: 15px;
+
+    }
+
+    .cards .row .colll {
+      background: var(--color-white);
+      border-radius: 15px;
+      margin-top: 20px;
+    }
+
+
+    .cards .row .col-2 {
+      background: rgb(61, 255, 197);
+      color: var(--color-black);
+      padding: 2em;
+      border-radius: 15px;
+      width: 100%;
+      /* max-width: 420px; */
+      /* margin: 1em; */
+    }
+
+    .cardtittle {
+      padding: 50px;
+      text-align: center;
+    }
+
+    .cardname {
+      text-align: center;
+      padding: 10px;
+      color: white;
+    }
+
+    .cards .row .col button {
+      padding: 50px;
+      text-align: center;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.383);
+      color: rgb(255, 255, 255);
+      border-radius: var(--card-padding);
+      cursor: pointer;
+    }
+
+    .cards .row .col button:hover {
+      background-color: var(--color-primary);
+    }
+
+    .item1 {
+      grid-column: 1 / 2;
+    }
+
+    /* ============================  Thems =============================== */
+
+    .customize-theme {
+      background-color: rgba(255, 255, 250, 0.5);
+      width: 100vw;
+      height: 100vh;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: 100;
+      text-align: center;
+      display: grid;
+      place-items: center;
+      font-size: 0.9rem;
+      display: none;
+    }
+
+    .customize-theme .card {
+      background: var(--color-white);
+      padding: 3rem;
+      border-radius: var(--car-border-radius);
+      width: 50%;
+      box-shadow: 0 0 1rem var(--color-primary);
+    }
+
+    .customize-theme .choose-color {
+      background: var(--color-light);
+      padding: var(--search-padding);
+      border-radius: var(--car-border-radius);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .customize-theme .choose-color span {
+      width: 2.2rem;
+      height: 2.2rem;
+      border-radius: 50%;
+    }
+
+    .customize-theme .choose-color span:nth-child(1) {
+      background: hsl(252, 75%, 60%);
+    }
+
+    .customize-theme .choose-color span:nth-child(2) {
+      background: hsl(52, 75%, 60%);
+    }
+
+    .customize-theme .choose-color span:nth-child(3) {
+      background: hsl(352, 75%, 60%);
+    }
+
+    .customize-theme .choose-color span:nth-child(4) {
+      background: hsl(152, 75%, 60%);
+    }
+
+    .customize-theme .choose-color span:nth-child(5) {
+      background: hsl(202, 75%, 60%);
+    }
+
+    .customize-theme .choose-color span.active {
+      border: 5px solid white;
+    }
+
+    /* --------------------background------------------ */
+    .customize-theme .background {
+      margin-top: 2rem;
+    }
+
+    .customize-theme .choose-bg {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1.5rem;
+    }
+
+    .customize-theme .choose-bg>div {
+      padding: var(--car-border-radius);
+      width: 100%;
+      display: flex;
+      align-items: center;
+      /* background: red; */
+      font-size: 1rem;
+      font-weight: bold;
+      border-radius: 0.4rem;
+      cursor: pointer;
+    }
+
+    .customize-theme .choose-bg>div.active {
+      border: 2px solid var(--color-primary);
+    }
+
+    .customize-theme .choose-bg .bg-1 {
+      background: white;
+      color: black;
+    }
+
+    .customize-theme .choose-bg .bg-2 {
+      background: hsl(252, 30%, 17%);
+      color: rgb(255, 255, 255);
+    }
+
+    .customize-theme .choose-bg .bg-3 {
+      background: hsl(252, 30%, 10%);
+      color: rgb(255, 255, 255);
+    }
+
+    .customize-theme .choose-bg>div span {
+      width: 2rem;
+      height: 2rem;
+      border: 2px solid var(--color-gray);
+      border-radius: 50%;
+      margin-right: 1rem;
+    }
+
+    .search {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .bttn {
+      margin: 0.5em;
+      border-radius: 50%;
+      border: none;
+      height: 44px;
+      width: 44px;
+      outline: none;
+      background: #7c7c7c2b;
+      color: white;
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+    }
+
+    input.search-bar {
+      border: none;
+      outline: none;
+      padding: 0.4em 1em;
+      border-radius: 24px;
+      background: #a9a9a993;
+      color: white;
+      font-family: inherit;
+      font-size: 105%;
+      width: 100%;
+    }
+
+    /* .bttn:hover {
+  background: #7c7c7c6b;
+} */
+
+    h1.temp {
+      margin: 0;
+      margin-bottom: 0.4em;
+    }
+
+    .flex {
+      display: flex;
+      align-items: center;
+    }
+
+    .description {
+      text-transform: capitalize;
+      margin-left: 8px;
+    }
+
+    .weather.loading {
+      visibility: hidden;
+      max-height: 20px;
+      position: relative;
+    }
+
+    .weather.loading:after {
+      visibility: visible;
+      content: "Loading...";
+      color: white;
+      position: absolute;
+      top: 0;
+      left: 20px;
+    }
+
+    .icon {
+      width: 100px;
+    }
+
+    /* ============================  col 1 =============================== */
+
+
+    .balance-card {
+      position: relative;
+    }
+
+    .balance-card .balance {
+      font-size: 38px;
+      padding: 10px 20px;
+      color: var(--color-primary);
+      padding-left: 100px;
+    }
+
+
+    .balance-card .balancestatus {
+      font-size: 16px;
+      font-weight: bold;
+      padding-left: 40px;
+      color: rgb(153, 153, 153);
+    }
+
+
+
+    .debit-card {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      border-radius: 18px;
+      background-position: center;
+      background-size: cover;
+      background: #33ccff;
+      color: #fff;
+    }
+
+    .debit-card .cardnumber {
+      font-size: 18px;
+      padding: 10px 20px;
+      padding-right: 0;
+      background: rgba(255, 255, 255, 0.6);
+      color: #000;
+      font-weight: normal;
+      text-shadow: 1px 1px 1px rgba(16, 16, 16, 0.1),
+        1px 2px 1px rgba(16, 16, 16, 0.1), 1px 3px 1px rgba(16, 16, 16, 0.1),
+        1px 4px 1px rgba(16, 16, 16, 0.1), 1px 5px 1px rgba(16, 16, 16, 0.1);
+    }
+
+    .debit-card .cardholder {
+      font-size: 18px;
+      padding: 20px;
+      font-weight: normal;
+    }
+
+    .t-i,
+    .p-i,
+    .u-i,
+    .i-s {
+      font-size: 25px;
+      font-weight: 700;
+      /* padding: 20px 5px 20px 20px; */
+    }
+
+    .status {
+      font-size: 18px;
+      padding: 6px 20px;
+      border-radius: 6px;
+      color: #fff;
+      position: relative;
+      bottom: 3px;
+    }
+
+    .total-invoice .status {
+      font-weight: 700;
+      color: #339933;
+      font-size: 16px;
+      padding-left: 5px;
+    }
+
+    .paid-invoice .status {
+      background: #0066cc;
+    }
+
+    .unpaid-invoice .status {
+      background: #ff0066;
+    }
+
+    .invoice-sent .status {
+      background: #ffcc00;
+    }
+
+    .striped {
+      width: max-content;
+    }
+  </style>
+</head>
+
+<body>
+
+  <nav>
+    <div class="container">
+      <a href="http://127.0.0.1:5501/cropselect.html">
+      <h2 class="log">
+        KrushiVal
+      </h2>
+    </a>
+      <!-- <div class="search-bar">
+            <i class="uil uil-search"></i>
+            <input type="search" placeholder="Search for post">
+        </div> -->
+      <div class="create">
+        <!-- <label class="btn btn-primary" for="create post"></label> -->
+        <div class="profile-photo">
+          <img src="../static/logoo.png">
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+
+    <div class="container">
+
+      <div class="left"> <!-- ====================================LEFT============================== -->
+
+        <!-- ----------------------------profile------------------- -->
+        <a class="profile">
+          <div class="profile-photo">
+          <img src="../static/logoo.png">
+          
+          </div>
+          <div class="handle">
+            <h4>KrushiVal</h4>
+
+          </div>
+        </a>
+        <!-- -------------------------------Sidebar--------------------------- -->
+        <div class="sidebar">
+          <a href="http://127.0.0.1:5501/cropselect.html" class="menu-item">
+            <span><i class="uil uil-home"></i></span>
+            <h3>Home</h3>
+          </a>
+          <a href="http://localhost:5000/form" class="menu-item " id="messages-notifications">
+            <span><i class="uil uil-tag-alt"></i></span>
+            <h3>Crop Prediction</h3>
+          </a>
+
+          <a href="http://127.0.0.1:5501/Crop_Prediction-master/templates/index.html" class="menu-item active" id="explore">
+            <span><i class="uil uil-analytics"></i></span>
+            <h3>Price Prediction</h3>
+          </a>
+          <a href="http://127.0.0.1:5501/Crop_Prediction-master/templates/about.html" class="menu-item" id="insight">
+            <span><i class="uil uil-lightbulb-alt"></i></span>
+            <h3>About Us</h3>
+          </a>
+          <a class="menu-item" id="theme">
+            <span><i class="uil uil-palette"></i></span>
+            <h3>Themes</h3>
+          </a>
+        </div>
+        <!-- -----------------------End of sidebar------------------------- -->
+        <!-- <label for="create-post" class="btn btn-primary">Log Out</label> -->
+      </div> <!-- -------------------- End Of Left -------------------------- -->
+
+
+
+
+      <div class="middle">
+        <!-- ====================================MiDDLE============================== -->
+        <div class="main-body">
+          <div class="cards">
+            <div class="row row-1">
+              <!-- ====================================One============================== -->
+              <div class="col">
+                <img class="col" width="100%" height="100%" src="{{context.image_url}}" alt="">
+              </div>
+              <!-- ====================================two============================== -->
+              <div class="col-2 gapp" style="background-color: var(--color-primary);">
+                <h1 class="cardname">Crop Name : {{context.name}}</h1>
+                <div class="colll" style="background-color:  var(--color-white)">
+                  <h3 style="text-align: center; color: white;">Minimum price :</h3>
+                  <h4 class="cardname" style="padding: 10px; color: rgb(255, 47, 47);">₹{{context.min_crop[1]}}
+                  </h4>
+                  <!-- <h3 class="cardname">{{context.min_crop[0]}}</h3> -->
+
+                </div>
+                <div class="colll" style="background-color: var(--color-white)">
+                  <h3 style="text-align: center; color: white;">Maximum price :</h3>
+                  <h4 class="cardname" style="padding: 10px; color: greenyellow;">₹{{context.max_crop[1]}}</h4>
+                  <!-- <h3 class="cardname">{{context.max_crop[0]}}</h3> -->
+
+                </div>
+              </div>
+              <!-- ====================================two============================== -->
+
+              <div class="col">
+                <div class="paid-invoice">
+                  <h3 class="cardtittle">Current Price</h3>
+                  <div class="colll" style="background-color: rgb(233, 17, 17)">
+                    <h4 class="cardtittle">₹ {{context.current_price}} / ql</h4>
+                  </div>
+                </div>
+              </div>
+              <!-- ====================================two============================== -->
+
+              <div class="col">
+                <div class="paid-invoice">
+                  <h3 class="cardtittle">Prime Location</h3>
+                  <div class="colll" style="background-color: rgb(0, 136, 70)">
+                    <h4 class="cardtittle">{{context.prime_loc}}</h4>
+                  </div>
+                </div>
+              </div>
+              <!-- ====================================two============================== -->
+
+              <div class="col">
+                <div class="paid-invoice">
+                  <h3 class="cardtittle">Crop Type</h3>
+                  <div class="colll" style="background-color: rgb(7, 178, 252)">
+                    <h4 class="cardtittle">{{context.type_c}}</h4>
+                  </div>
+                </div>
+              </div>
+              <!-- ====================================two============================== -->
+
+              <div class="col">
+                <div class="paid-invoice">
+                  <h3 class="cardtittle">Export</h3>
+                  <div class="colll" style="background-color: rgb(240, 4, 253)">
+                    <h4 class="cardtittle">{{context.export}}</h4>
+                  </div>
+                </div>
+              </div>
+
+               <!-- ====================================two============================== -->
+
+              <div class="col">
+                    <div class="paid-invoice">
+                      <h3 class="cardtittle">Predicted Best Selling Month</h3>
+                      <div class="colll" style="background-color: rgb(253, 141, 4)">
+                        <h4 class="cardtittle">{{context.max_crop[0]}}</h4>
+                      </div>
+                    </div>
+              </div>
+
+
+              <div class="col">
+                <div class="paid-invoice">
+                  <h3 class="cardtittle">Predicted Best Selling Price</h3>
+                  <div class="colll" style="background-color: rgb(21, 96, 69)">
+                    <h4 class="cardtittle">₹{{context.max_crop[1]}}</h4>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- ====================================Seven============================== -->
+              <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+              <div class="col item1">
+
+                <div class="chartjs-wrapper col s7 offset-s1">
+                  <canvas id="chartjs-0" class="chartjs" width="undefined" height="300" style=" width:800px !important;
+              height:400px !important;">
+                  </canvas>
+                  <script>
+                    new Chart(
+                      document.getElementById("chartjs-0"), { "type": "line", "data": { "labels": {{ context.forecast_x | safe }}, "datasets": [{ "label": "Next year Price", "data": {{ context.forecast_y }}, "fill": false, "borderColor": "rgb(75, 192, 192)", "lineTension": 0.1}]}, "options": {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                        yAxes: [{
+                          display: true,
+                          ticks: {
+                            suggestedMin: 1000,
+                            stepSize: 200
+                          }
+                        }]
+                      }
+                    }});
+                  </script>
+                </div>
+
+              </div>
+              <!-- ====================================Seven============================== -->
+
+              <div class="col item2">
+                <div class="chartjs-wrapper col s7 offset-s1">
+                  <canvas id="chartjs-1" class="chartjs" width="undefined" height="300" style=" width:800px !important;
+              height:400px !important;">
+                  </canvas>
+                  <script>
+                    new Chart(document.getElementById("chartjs-1"), { "type": "line", "data": { "labels": {{ context.previous_x | safe }}, "datasets": [{ "label": "Previous year price", "data": {{ context.previous_y }}, "fill": false, "borderColor": "rgb(75, 192, 192)", "lineTension": 0.1}]}, "options": {
+                      responsive: true,
+                      maintainAspectRatio: false,
+                      scales: {
+                        yAxes: [{
+                          display: true,
+                          ticks: {
+                            suggestedMin: 1000,
+                            stepSize: 200
+                          }
+                        }]
+                      }
+                    }});</script>
+                </div>
+              </div>
+
+              <!-- ====================================Seven============================== -->
+              <!-- ====================================Seven============================== -->
+            </div>
+            <div class="row row-2">
+
+              <div class="col s4">
+                <h2 class="cardtittle">Forecast Trends</h2>
+                <table class="striped">
+                  <thead>
+                    <tr>
+                      <th  class="cardtittle">Month</th>
+                      <th  class="cardtittle">Price (per Qtl.)</th>
+                      <th class="cardtittle">Change %</th>
+                      <th class="cardtittle">Change</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {% for item in context.forecast_values %}
+                    <tr class="cardtittle">
+                      <td>{{item[0]}}</td>
+                      <td>₹{{item[1]}}</td>
+                      <td class="valign-wrapper">{{item[2]}}% {% if item[2]>=0 %}
+                        <!-- <img class="cardtittle" src="../static/gain-icon.png" style="right: 200px;"> -->
+                        {% else %}
+                        <!-- <img src="../static/loss-icon.png" height="25" width="25"> -->
+                        {% endif %}</td>
+                        <td class="valign-wrapper">{% if item[2]>=0 %}
+                          <img class="cardtittle" src="../static/gain-icon.png"
+                            style="right: 200px;">{% else %}<img  class="cardtittle" src="../static/loss-icon.png">{%
+                          endif %}</td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+  </main>
+
+  <!-- </script> -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</body>
+
+</html>

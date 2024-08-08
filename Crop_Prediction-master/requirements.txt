@@ -1,0 +1,7 @@
+flask
+sklearn
+numpy
+pandas
+flask-cors
+cd Crop_Prediction-master
+python app.py
